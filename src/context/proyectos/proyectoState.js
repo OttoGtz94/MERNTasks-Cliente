@@ -8,6 +8,7 @@ import {
 	AGREGAR_PROYECTO,
 	VALIDAR_FORMULARIO,
 	PROYECTO_ACTUAL,
+	ELIMINAR_PROYECTO,
 } from '../../types/';
 
 const ProyectoState = props => {
@@ -55,6 +56,7 @@ const ProyectoState = props => {
 		});
 	};
 
+	// Mostrar error si el formulario esta vacio
 	const mostrarError = () => {
 		dispatch({
 			type: VALIDAR_FORMULARIO,
@@ -65,6 +67,14 @@ const ProyectoState = props => {
 	const proyectoActual = proyectoId => {
 		dispatch({
 			type: PROYECTO_ACTUAL,
+			payload: proyectoId,
+		});
+	};
+
+	// Elimina el proyecto seleccionado
+	const eliminarProyecto = proyectoId => {
+		dispatch({
+			type: ELIMINAR_PROYECTO,
 			payload: proyectoId,
 		});
 	};
@@ -81,6 +91,7 @@ const ProyectoState = props => {
 				agregarProyecto,
 				mostrarError,
 				proyectoActual,
+				eliminarProyecto,
 			}}>
 			{props.children}
 		</proyectoContex.Provider>

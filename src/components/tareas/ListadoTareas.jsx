@@ -4,7 +4,7 @@ import Tarea from './Tarea';
 
 const ListadoTareas = () => {
 	const proyectosContext = useContext(proyectoContext);
-	const { proyecto } = proyectosContext;
+	const { proyecto, eliminarProyecto } = proyectosContext;
 
 	if (!proyecto) return <h2>Selecciona un proyecto</h2>;
 	const [proyectoActual] = proyecto;
@@ -15,6 +15,10 @@ const ListadoTareas = () => {
 		{ nombre: 'Conectar a Base de Datos', estado: true },
 		{ nombre: 'Buscar buggs', estado: false },
 	];
+
+	const onClickEliminar = () => {
+		eliminarProyecto(proyectoActual.id);
+	};
 
 	return (
 		<Fragment>
@@ -30,7 +34,10 @@ const ListadoTareas = () => {
 					))
 				)}
 			</ul>
-			<button type='button' className='btn btn-eliminar'>
+			<button
+				type='button'
+				className='btn btn-eliminar'
+				onClick={onClickEliminar}>
 				Eliminar Proyecto &times;
 			</button>
 		</Fragment>
