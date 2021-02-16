@@ -27,7 +27,6 @@ const NuevoProyecto = () => {
 
 	const onSubmitProyecto = e => {
 		e.preventDefault();
-		console.log(proyecto);
 
 		// Validar el proyecto
 		if (nombre === '') {
