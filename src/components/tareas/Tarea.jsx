@@ -8,6 +8,7 @@ const Tarea = ({ tarea }) => {
 		eliminarTarea,
 		obtenerTareas,
 		cambiarEstadoTarea,
+		guardarTareaActual,
 	} = tareasContext;
 
 	const proyectosContext = useContext(proyectoContext);
@@ -28,6 +29,11 @@ const Tarea = ({ tarea }) => {
 			tarea.estado = true;
 		}
 		cambiarEstadoTarea(tarea);
+	};
+
+	// fn para editar tarea seleccionada
+	const seleccionarTarea = tarea => {
+		guardarTareaActual(tarea);
 	};
 
 	return (
@@ -51,7 +57,10 @@ const Tarea = ({ tarea }) => {
 				)}
 			</div>
 			<div className='acciones'>
-				<button type='button' className='btn btn-primario'>
+				<button
+					type='button'
+					className='btn btn-primario'
+					onClick={() => seleccionarTarea(tarea)}>
 					Editar
 				</button>
 				<button
