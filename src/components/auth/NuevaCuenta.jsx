@@ -59,6 +59,8 @@ const NuevaCuenta = () => {
 			);
 			return;
 		}
+
+		// pasarlo al action
 	};
 
 	return (
