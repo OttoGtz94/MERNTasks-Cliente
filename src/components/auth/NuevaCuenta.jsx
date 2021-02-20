@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import AlertaContext from '../../context/alertas/alertaContext';
+import AlertaState from '../../context/alertas/alertaState';
 
 const NuevaCuenta = () => {
+	// extraer los valores del context
+	const alertaContext = useContext(AlertaContext);
+
+	const { alerta, mostrarAlerta } = alertaContext;
+
 	const [usuario, guardarUsuario] = useState({
 		nombre: '',
 		email: '',
@@ -20,10 +27,28 @@ const NuevaCuenta = () => {
 
 	const onSubmit = e => {
 		e.preventDefault();
+
+		// validar que no existan campos vacios
+		if (
+			nombre.trim() === `` ||
+			email.trim() === '' ||
+			password.trim() === `` ||
+			confirmar.trim() === ``
+		) {
+			mostrarAlerta(
+				'Faltan campos por llenar',
+				'alerta-error',
+			);
+		}
 	};
 
 	return (
 		<div className='form-usuario'>
+			{alerta ? (
+				<div className={`alerta ${alerta.categoria}`}>
+					{alerta.msg}
+				</div>
+			) : null}
 			<div className='contenedor-form sombra-dark'>
 				<h1>Nueva Cuenta</h1>
 
@@ -63,7 +88,9 @@ const NuevaCuenta = () => {
 						/>
 					</div>
 					<div className='campo-form'>
-						<label htmlFor='confirmar'>Confirmar password</label>
+						<label htmlFor='confirmar'>
+							Confirmar password
+						</label>
 						<input
 							type='password'
 							id='confirmar'
