@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AlertaContext from '../../context/alertas/alertaContext';
 import AlertaState from '../../context/alertas/alertaState';
+import AuthContext from '../../context/autenticacion/authContext';
 
 const NuevaCuenta = () => {
 	// extraer los valores del context
@@ -9,6 +10,9 @@ const NuevaCuenta = () => {
 
 	const { alerta, mostrarAlerta } = alertaContext;
 
+	const authContext = useContext(AuthContext);
+	const { registrarUsuario } = authContext;
+	// state para iniciar sesion
 	const [usuario, guardarUsuario] = useState({
 		nombre: '',
 		email: '',
@@ -61,6 +65,11 @@ const NuevaCuenta = () => {
 		}
 
 		// pasarlo al action
+		registrarUsuario({
+			nombre,
+			email,
+			password,
+		});
 	};
 
 	return (
