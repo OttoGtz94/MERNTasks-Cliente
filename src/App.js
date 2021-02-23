@@ -13,6 +13,7 @@ import TareaState from './context/tareas/tareaState';
 import AlertaState from './context/alertas/alertaState';
 import AuthState from './context/autenticacion/authState';
 import tokenAuth from './config/tokenAuth';
+import RutaPrivada from './components/rutas/RutaPrivada';
 
 const token = localStorage.getItem('token');
 if (token) {
@@ -39,7 +40,7 @@ function App() {
 									path='/nueva-cuenta'
 									component={NuevaCuenta}
 								/>
-								<Route
+								<RutaPrivada
 									exact
 									path='/proyectos'
 									component={Proyectos}
