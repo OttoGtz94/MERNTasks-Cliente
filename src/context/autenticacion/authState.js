@@ -38,9 +38,14 @@ const AuthState = props => {
 				payload: respuesta.data,
 			});
 		} catch (error) {
-			console.log(error);
+			// console.log(error.response);
+			const alerta = {
+				msg: error.response.data.msg,
+				categoria: 'alerta-error',
+			};
 			dispatch({
 				type: REGISTRO_ERROR,
+				payload: alerta,
 			});
 		}
 	};

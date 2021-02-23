@@ -11,7 +11,7 @@ export default (state, action) => {
 	switch (action.type) {
 		case REGISTRO_EXITOSO:
 			localStorage.setItem('token', action.payload.token);
-			console.log('authReducer registro exitoso');
+			// console.log('authReducer registro exitoso');
 			return {
 				...state,
 				autenticado: true,
