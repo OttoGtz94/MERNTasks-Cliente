@@ -34,7 +34,7 @@ const AuthState = props => {
 				'/api/usuarios',
 				datos,
 			);
-			console.log(respuesta.data);
+			// console.log(respuesta.data);
 			dispatch({
 				type: REGISTRO_EXITOSO,
 				payload: respuesta.data,

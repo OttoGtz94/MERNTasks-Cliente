@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import uuid, { v4 as uuidv4 } from 'uuid';
+// import uuid, { v4 as uuidv4 } from 'uuid';
 import proyectoContex from './proyectoContext';
 import proyectoReducer from './proyectoReducer';
 import {
@@ -10,14 +10,15 @@ import {
 	PROYECTO_ACTUAL,
 	ELIMINAR_PROYECTO,
 } from '../../types/';
+import clienteAxios from '../../config/axios';
 
 const ProyectoState = props => {
-	const proyectos = [
-		{ id: 1, nombre: 'Tienda virtual' },
-		{ id: 2, nombre: 'Fitcon' },
-		{ id: 3, nombre: 'Sitio web' },
-		{ id: 4, nombre: 'Portafolio' },
-	];
+	// const proyectos = [
+	// 	{ id: 1, nombre: 'Tienda virtual' },
+	// 	{ id: 2, nombre: 'Fitcon' },
+	// 	{ id: 3, nombre: 'Sitio web' },
+	// 	{ id: 4, nombre: 'Portafolio' },
+	// ];
 	const initialState = {
 		proyectos: [],
 		formulario: false,
@@ -38,22 +39,38 @@ const ProyectoState = props => {
 		});
 	};
 
-	const obtenerProyectos = () => {
-		dispatch({
-			type: OBTENER_PROYECTOS,
-			payload: proyectos,
-		});
+	const obtenerProyectos = async () => {
+		try {
+			const resultado = await clienteAxios.get(
+				'/api/proyectos',
+			);
+			dispatch({
+				type: OBTENER_PROYECTOS,
+				payload: resultado.data.proyectos,
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	// Agregar nuevo proyecto
-	const agregarProyecto = proyecto => {
-		proyecto.id = uuidv4();
+	const agregarProyecto = async proyecto => {
+		// proyecto.id = uuidv4();
 
-		// Insertar el proyecto en el state
-		dispatch({
-			type: AGREGAR_PROYECTO,
-			payload: proyecto,
-		});
+		try {
+			const resultado = await clienteAxios.post(
+				'/api/proyectos',
+				proyecto,
+			);
+			console.log(resultado);
+			// Insertar el proyecto en el state
+			dispatch({
+				type: AGREGAR_PROYECTO,
+				payload: resultado.data,
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	// Mostrar error si el formulario esta vacio
