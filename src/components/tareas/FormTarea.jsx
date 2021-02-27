@@ -52,7 +52,6 @@ const FormTarea = () => {
 		e.preventDefault();
 
 		// validar
-
 		// pasar la validacion
 		if (nombre.trim() === '') {
 			validarTarea();
@@ -63,8 +62,8 @@ const FormTarea = () => {
 		if (tareaseleccionada === null) {
 			// tarea nueva
 			// agregar la nueva tarea al state de tareas
-			tarea.proyectoId = proyectoActual.id;
-			tarea.estado = false;
+			tarea.proyecto = proyectoActual._id;
+			// tarea.estado = false;
 			agregarTarea(tarea);
 		} else {
 			// actualizar tarea

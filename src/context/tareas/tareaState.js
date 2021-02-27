@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import uuid, { v4 as uuidv4 } from 'uuid';
+// import uuid, { v4 as uuidv4 } from 'uuid';
 import TareaContext from './tareaContext';
 import TareaReducer from './tareaReducer';
 import {
@@ -12,72 +12,73 @@ import {
 	ACTUALIZAR_TAREA,
 	LIMPIAR_TAREA,
 } from '../../types';
+import clienteAxios from '../../config/axios';
 
 const TareaState = props => {
 	const initialState = {
-		tareas: [
-			{
-				id: 1,
-				nombre: 'Cambiar background',
-				estado: true,
-				proyectoId: 1,
-			},
-			{
-				id: 2,
-				nombre: 'Agregar Hover',
-				estado: false,
-				proyectoId: 2,
-			},
-			{
-				id: 3,
-				nombre: 'Conectar a Base de Datos',
-				estado: true,
-				proyectoId: 3,
-			},
-			{
-				id: 4,
-				nombre: 'Buscar buggs',
-				estado: false,
-				proyectoId: 4,
-			},
-			{
-				id: 5,
-				nombre: 'Docker',
-				estado: false,
-				proyectoId: 2,
-			},
-			{
-				id: 6,
-				nombre: 'Cambiar fuente',
-				estado: true,
-				proyectoId: 3,
-			},
-			{
-				id: 7,
-				nombre: 'Conexion a MongoDB',
-				estado: false,
-				proyectoId: 4,
-			},
-			{
-				id: 8,
-				nombre: 'Agregar boton',
-				estado: false,
-				proyectoId: 1,
-			},
-			{
-				id: 9,
-				nombre: 'Crear hooks',
-				estado: true,
-				proyectoId: 2,
-			},
-			{
-				id: 10,
-				nombre: 'Incorporar webpack',
-				estado: false,
-				proyectoId: 4,
-			},
-		],
-		tareasproyecto: null,
+		// tareas: [
+		// 	{
+		// 		id: 1,
+		// 		nombre: 'Cambiar background',
+		// 		estado: true,
+		// 		proyectoId: 1,
+		// 	},
+		// 	{
+		// 		id: 2,
+		// 		nombre: 'Agregar Hover',
+		// 		estado: false,
+		// 		proyectoId: 2,
+		// 	},
+		// 	{
+		// 		id: 3,
+		// 		nombre: 'Conectar a Base de Datos',
+		// 		estado: true,
+		// 		proyectoId: 3,
+		// 	},
+		// 	{
+		// 		id: 4,
+		// 		nombre: 'Buscar buggs',
+		// 		estado: false,
+		// 		proyectoId: 4,
+		// 	},
+		// 	{
+		// 		id: 5,
+		// 		nombre: 'Docker',
+		// 		estado: false,
+		// 		proyectoId: 2,
+		// 	},
+		// 	{
+		// 		id: 6,
+		// 		nombre: 'Cambiar fuente',
+		// 		estado: true,
+		// 		proyectoId: 3,
+		// 	},
+		// 	{
+		// 		id: 7,
+		// 		nombre: 'Conexion a MongoDB',
+		// 		estado: false,
+		// 		proyectoId: 4,
+		// 	},
+		// 	{
+		// 		id: 8,
+		// 		nombre: 'Agregar boton',
+		// 		estado: false,
+		// 		proyectoId: 1,
+		// 	},
+		// 	{
+		// 		id: 9,
+		// 		nombre: 'Crear hooks',
+		// 		estado: true,
+		// 		proyectoId: 2,
+		// 	},
+		// 	{
+		// 		id: 10,
+		// 		nombre: 'Incorporar webpack',
+		// 		estado: false,
+		// 		proyectoId: 4,
+		// 	},
+		// ],
+		tareasproyecto: [],
 		errortarea: false,
 		tareaseleccionada: null,
 	};
@@ -91,20 +92,36 @@ const TareaState = props => {
 	// CREAR FUNCIONES
 
 	// fn obtener las tareas de un proyecto
-	const obtenerTareas = proyectoId => {
-		dispatch({
-			type: TAREAS_PROYECTO,
-			payload: proyectoId,
-		});
+	const obtenerTareas = async proyecto => {
+		try {
+			const resultado = await clienteAxios.get(
+				'/api/tareas',
+				{ params: { proyecto } },
+			);
+			dispatch({
+				type: TAREAS_PROYECTO,
+				payload: resultado.data.tareas,
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	// fn para agregar tarea a proyecto
-	const agregarTarea = tarea => {
-		tarea.id = uuidv4;
-		dispatch({
-			type: AGREGAR_TAREA,
-			payload: tarea,
-		});
+	const agregarTarea = async tarea => {
+		// tarea.id = uuidv4;
+		try {
+			const resultado = await clienteAxios.post(
+				'/api/tareas',
+				tarea,
+			);
+			dispatch({
+				type: AGREGAR_TAREA,
+				payload: tarea,
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	// fn para validar y/o mostrar error al agregar tarea
@@ -156,7 +173,7 @@ const TareaState = props => {
 	return (
 		<TareaContext.Provider
 			value={{
-				tareas: state.tareas,
+				// tareas: state.tareas,
 				tareasproyecto: state.tareasproyecto,
 				errortarea: state.errortarea,
 				tareaseleccionada: state.tareaseleccionada,
