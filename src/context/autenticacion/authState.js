@@ -85,7 +85,7 @@ const AuthState = props => {
 				'/api/auth',
 				datos,
 			);
-			console.log(respuesta);
+			// console.log(respuesta);
 			dispatch({
 				type: LOGIN_EXITOSO,
 				payload: respuesta.data,
