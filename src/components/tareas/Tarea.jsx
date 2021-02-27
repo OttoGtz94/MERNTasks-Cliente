@@ -7,7 +7,8 @@ const Tarea = ({ tarea }) => {
 	const {
 		eliminarTarea,
 		obtenerTareas,
-		cambiarEstadoTarea,
+		// cambiarEstadoTarea,
+		actualizarTarea,
 		guardarTareaActual,
 	} = tareasContext;
 
@@ -28,7 +29,7 @@ const Tarea = ({ tarea }) => {
 		} else {
 			tarea.estado = true;
 		}
-		cambiarEstadoTarea(tarea);
+		actualizarTarea(tarea);
 	};
 
 	// fn para editar tarea seleccionada
